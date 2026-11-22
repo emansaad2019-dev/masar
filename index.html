@@ -346,7 +346,7 @@ async function save(s){
  try{if(db)await db.collection("students").doc(s.id).set(s)}catch(e){}
 }
 function tilt(root){root.querySelectorAll(".card").forEach(c=>{c.onmousemove=e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`rotateY(${x*-14}deg) rotateX(${y*14}deg)`};c.onmouseleave=()=>c.style.transform="";c.addEventListener('pointerdown',e=>{if(e.target.matches('input,select,button'))return;const r=c.getBoundingClientRect(),d=Math.max(r.width,r.height)/2,p=document.createElement('span');p.className='rip';p.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;c.appendChild(p);setTimeout(()=>p.remove(),700)})})}
-function nav(){return `<div class="tabs"><button class="btn b" onclick="home()">الرئيسية</button>${me?`<button class="btn t" onclick="topics(${me.grade>=8?8:7})">🗺️ خريطة مساري</button>`:""}${me?`<button class="btn" onclick="hk()">الهيكل الوزاري مع الحلول</button>`:""}${me?`<button class="btn" onclick="mx()">الاختبارات التجريبية</button>`:""}${me?`<button class="btn" onclick="challenge()">⚡ تحدّي اليوم</button><button class="btn" onclick="achieve()">🏆 إنجازاتي</button><button class="btn" onclick="plan()">🩺 خطتي العلاجية${planOpen(me.grade>=8?8:7).length?" ("+planOpen(me.grade>=8?8:7).length+")":""}</button><button class="btn" onclick="notebook()">📒 دفتر أخطائي${errDue().length?" ("+errDue().length+")":""}</button><button class="btn" onclick="race()">⏱️ سباق الدقيقة</button><button class="btn" onclick="tools()">🧰 الأدوات</button>`:""}<button class="btn o" onclick="gate()">لوحة المعلمة 🔒</button></div>`}
+function nav(){return `<div class="tabs"><button class="btn b" onclick="home()">الرئيسية</button>${me?`<button class="btn t" onclick="topics(${me.grade>=8?8:7})">🗺️ خريطة مساري</button>`:""}${me?`<button class="btn" onclick="hk()">الهيكل الوزاري مع الحلول</button>`:""}${me?`<button class="btn" onclick="mx()">الاختبارات التجريبية</button>`:""}${me?`<button class="btn" onclick="challenge()">⚡ تحدّي اليوم</button><button class="btn" onclick="achieve()">🏆 إنجازاتي</button><button class="btn" onclick="plan()">🩺 خطتي العلاجية${planOpen(me.grade>=8?8:7).length?" ("+planOpen(me.grade>=8?8:7).length+")":""}</button><button class="btn" onclick="notebook()">📒 سجل أخطائي${errDue().length?" ("+errDue().length+")":""}</button><button class="btn" onclick="race()">⏱️ سباق الدقيقة</button><button class="btn" onclick="tools()">🧰 الأدوات</button>`:""}<button class="btn o" onclick="gate()">لوحة المعلمة 🔒</button></div>`}
 function home(){teacher=false;
  app.innerHTML=annHTML()+`<div class="panel"><h2>طلابنا الأعزاء</h2><p>اكتب اسمك واختر صفك، لتبدأ مع «مسار» رحلة تعليمية عبر دروس مادة الرياضيات وفق منهاج وزارة التربية والتعليم..</p><p>وفي نهاية الرحلة ستحصل على شهادة «مسار» التعليمية التي تؤهلك للحصول على ختم الميثاق للتعلم الذاتي.</p></div>
  <div class="grid hz"><div class="card" style="--c:var(--p)" tabindex="0"><h3>دخول الطالب</h3>
@@ -636,7 +636,7 @@ function badges(){const g=me&&me.grade>=8?8:7,T=lessonsOf(g),dn=T.filter(t=>isDo
  const B=[["🚀","أول محطة","أنهيت أول درس في مسارك",dn>=1],["🛤️","أنهى 5 محطات","أنهيت 5 دروس",dn>=5],["🏔️","نصف المسار","أنهيت نصف دروس الفصل",dn>=Math.ceil(T.length/2)],["🏁","بطل المسار","أنهيت كل دروس الفصل",dn==T.length],
   ["💯","العلامة الكاملة","حصلت على الدرجة الكاملة في درس",R.some(r=>r.n&&r.sc==r.n&&!String(r.k).startsWith("MX"))],["🧭","المستكشف","أكملت الاختبار التشخيصي",!!(me&&me.diag&&me.diag[g])],
   ["📋","خبير الهيكل","أنهيت 10 مهارات من الهيكل الوزاري",R.filter(r=>String(r.k).startsWith("H")).length>=10],["🎓","محاكي الوزارة","أنهيت اختبارًا تجريبيًا",R.some(r=>String(r.k).startsWith("MX"))],
-  ["🔥","مثابر 3 أيام","حللت تحدّي اليوم 3 أيام متتالية",(ch.best||0)>=3],["🌟","مثابر 7 أيام","حللت تحدّي اليوم 7 أيام متتالية",(ch.best||0)>=7],["⏱️","سريع البديهة","10 إجابات صحيحة أو أكثر في سباق الدقيقة",((me&&me.race&&me.race[g])||0)>=10],["🩺","تجاوز الصعوبات","عالجت 3 أفكار من خطتك العلاجية",Object.values((me&&me.plan)||{}).filter(p=>p.st=="done").length>=3],["📒","قاهر الأخطاء","أتقنت أسئلة دفتر الأخطاء",!!(me&&me.err&&me.err.length==0&&me.res&&me.res.length>0)]];
+  ["🔥","مثابر 3 أيام","حللت تحدّي اليوم 3 أيام متتالية",(ch.best||0)>=3],["🌟","مثابر 7 أيام","حللت تحدّي اليوم 7 أيام متتالية",(ch.best||0)>=7],["⏱️","سريع البديهة","10 إجابات صحيحة أو أكثر في سباق الدقيقة",((me&&me.race&&me.race[g])||0)>=10],["🩺","تجاوز الصعوبات","عالجت 3 أفكار من خطتك العلاجية",Object.values((me&&me.plan)||{}).filter(p=>p.st=="done").length>=3],["📒","قاهر الأخطاء","أتقنت أسئلة سجل الأخطاء",!!(me&&me.err&&me.err.length==0&&me.res&&me.res.length>0)]];
  if(g==7)B.push(["⚖️","بطل التناسب","أنهيت دروس الوحدة 1",rng(0,9)],["💰","بطل النسب المئوية","أنهيت دروس الوحدة 2",rng(9,17)],["➕","بطل الأعداد الصحيحة","أنهيت دروس الوحدة 3",rng(17,22)],["🍕","بطل الكسور","أنهيت دروس الوحدة 4",rng(22,30)]);
  return B}
 function achieve(){view="ach";if(!me){home();return}const B=badges(),got=B.filter(b=>b[3]).length;
@@ -769,7 +769,7 @@ function missRep(){const g=+$("#msg").value,name=$("#msn").value,box=$("#msr");i
  <button class="btn" id="mcp">📋 نسخ نقاط الضعف</button><span id="mcm"></span>`;
  $("#mcp").onclick=async()=>{try{await navigator.clipboard.writeText(txt);$("#mcm").textContent=" ✅ تم النسخ"}catch(e){$("#mcm").textContent=" تعذر النسخ"}}}
 
-// ===== تحديث الأفكار الجديدة: الإعدادات، الإعلانات، الواجبات، الشخصية، دفتر الأخطاء، المراجعة، التلميح، الأدوات، أوراق العمل، سباق الدقيقة، منافسة الشعب، التثبيت =====
+// ===== تحديث الأفكار الجديدة: الإعدادات، الإعلانات، الواجبات، الشخصية، سجل الأخطاء، المراجعة، التلميح، الأدوات، أوراق العمل، سباق الدقيقة، منافسة الشعب، التثبيت =====
 let CFG={ann:[],hw:[],vid7:{},vid8:{}};
 async function loadCfg(){try{const r=await fetch("config.json",{cache:"no-store"});if(r.ok){const j=await r.json();CFG=Object.assign(CFG,j);Object.assign(VID7,CFG.vid7||{});Object.assign(VID8,CFG.vid8||{})}}catch(e){}}
 const todayStr=()=>dkey(Date.now());
@@ -793,7 +793,7 @@ function avatarPick(){view="av";if(!me){home();return}const a=me.av||{e:"🙂",c
 function hubHTML(g){if(!me)return"";const p=points(),{L,nx}=lvlOf(p),due=errDue().length,H=hwFor(g);
  return annHTML()+`<div class="hub"><div class="hubme" onclick="avatarPick()" title="غيّر شخصيتك">${avHTML(40)}<div><b>${esc(me.name)}</b><small>${L[2]} المستوى: ${L[1]} • ${p} نقطة</small>${nx?`<div class="lvb2"><div style="width:${Math.min(100,Math.round((p-L[0])/(nx[0]-L[0])*100))}%"></div></div><small>باقي ${nx[0]-p} نقطة للمستوى «${nx[1]}»</small>`:"<small>وصلت لأعلى مستوى 👑</small>"}</div></div>
  <button class="hubb" onclick="plan()"><span>🩺</span><b>${planOpen(g).length}</b><small>${planOpen(g).length?"أفكار في خطتي العلاجية":"خطتي العلاجية"}</small></button>
- <button class="hubb" onclick="notebook()"><span>📒</span><b>${due}</b><small>${due?"أسئلة للمراجعة اليوم":"دفتر أخطائي"}</small></button>
+ <button class="hubb" onclick="notebook()"><span>📒</span><b>${due}</b><small>${due?"أسئلة للمراجعة اليوم":"سجل أخطائي"}</small></button>
  <button class="hubb" onclick="race()"><span>⏱️</span><b>${(me.race&&me.race[g])||0}</b><small>أفضل رقم في سباق الدقيقة</small></button>
  <button class="hubb" onclick="tools()"><span>🧰</span><b>3</b><small>أدوات تفاعلية</small></button></div>`+
  (H.length?`<div class="hwb"><h3>📝 واجباتي</h3>${H.map(h=>{const T=h.lessons||[],dn=T.filter(t=>isDone(g,t)).length,late=h.due&&h.due<todayStr()&&dn<T.length;
@@ -812,16 +812,16 @@ function qCard(q,label,id){return `<div class="lq lvh" data-id="${id}"><div clas
  <div class="lqa"><input class="lin" placeholder="اكتب إجابتك هنا" autocomplete="off"><button class="btn lchk">تحقّق</button><button class="hintb" type="button" onclick="this.parentNode.nextElementSibling.classList.toggle('hide')">💡 تلميح</button></div><div class="hintx hide">${hintOf(q)}</div><div class="lfb hide"></div></div>`}
 function notebook(){view="nb";if(!me){home();return}const g=me.grade>=8?8:7,E=(me.err||[]).filter(e=>e.g==g&&errQ(e)),due=E.filter(e=>e.next<=Date.now()),later=E.filter(e=>e.next>Date.now());
  const card=(e,j)=>{const x=errQ(e);return qCard(x.q,`${esc(x.t)} • أخطأت فيه ${e.w||1} ${(e.w||1)>1?"مرات":"مرة"} • المراجعة ${e.box+1} من 3`,j)};
- app.innerHTML=nav()+`<div class="panel hkw"><h2 style="margin-top:0">📒 دفتر أخطائي</h2><p>هنا تُجمع الأسئلة التي أخطأت فيها في الدروس. المراجعة الذكية تعيد لك كل سؤال بعد يوم، ثم بعد 3 أيام، ثم بعد أسبوع؛ وإذا حللته صحيحًا 3 مرات يخرج من الدفتر لأنك أتقنته 🎯</p>
- <p>في الدفتر الآن: <b>${E.length}</b> سؤالًا • للمراجعة اليوم: <b>${due.length}</b></p></div><div class="hkw">
- ${due.length?`<h3 class="uhd">🔔 مراجعة اليوم</h3>`+due.map((e,j)=>card(e,"d"+j)).join(""):(E.length?`<div class="panel">👏 لا توجد أسئلة مستحقة للمراجعة اليوم. يمكنك التدرّب على باقي أسئلة الدفتر الآن.</div>`:`<div class="panel">🎉 دفترك فارغ! إما أنك لم تخطئ بعد، أو أتقنت كل أخطائك.</div>`)}
- ${later.length?`<h3 class="uhd">📚 باقي أسئلة الدفتر</h3>`+later.map((e,j)=>card(e,"l"+j)).join(""):""}</div>`;
+ app.innerHTML=nav()+`<div class="panel hkw"><h2 style="margin-top:0">📒 سجل أخطائي</h2><p>هنا تُجمع الأسئلة التي أخطأت فيها في الدروس. المراجعة الذكية تعيد لك كل سؤال بعد يوم، ثم بعد 3 أيام، ثم بعد أسبوع؛ وإذا حللته صحيحًا 3 مرات يخرج من السجل لأنك أتقنته 🎯</p>
+ <p>في السجل الآن: <b>${E.length}</b> سؤالًا • للمراجعة اليوم: <b>${due.length}</b></p></div><div class="hkw">
+ ${due.length?`<h3 class="uhd">🔔 مراجعة اليوم</h3>`+due.map((e,j)=>card(e,"d"+j)).join(""):(E.length?`<div class="panel">👏 لا توجد أسئلة مستحقة للمراجعة اليوم. يمكنك التدرّب على باقي أسئلة السجل الآن.</div>`:`<div class="panel">🎉 سجلك فارغ! إما أنك لم تخطئ بعد، أو أتقنت كل أخطائك.</div>`)}
+ ${later.length?`<h3 class="uhd">📚 باقي أسئلة السجل</h3>`+later.map((e,j)=>card(e,"l"+j)).join(""):""}</div>`;
  const all={};due.forEach((e,j)=>all["d"+j]=e);later.forEach((e,j)=>all["l"+j]=e);
  app.querySelectorAll(".lq").forEach(el=>{const e=all[el.dataset.id],q=errQ(e).q,inp=el.querySelector(".lin"),b=el.querySelector(".lchk"),fb=el.querySelector(".lfb");
   const go=async()=>{if(el.dataset.d||!inp.value.trim())return;el.dataset.d=1;inp.disabled=b.disabled=true;const ok=acheck(inp.value,q.a);
    if(ok){e.box++;if(e.box>=3)me.err=me.err.filter(x=>x!==e);else e.next=Date.now()+ERRI[e.box]*864e5;burst(b)}else{e.box=0;e.w=(e.w||1)+1;e.next=Date.now()+864e5}
    await save(me);el.classList.add(ok?"lok":"lno");fb.classList.remove("hide");
-   fb.innerHTML=(ok?`<div class="fbh fbok">✔ أحسنت! ${e.box>=3?"أتقنت هذا السؤال وخرج من الدفتر 🎯":"سيعود إليك بعد "+ERRI[e.box]+(ERRI[e.box]==1?" يوم":" أيام")+" للتثبيت."}</div>`:`<div class="fbh fbno">✘ ليست صحيحة. الإجابة: <span class="lans">${q.ah}</span>. سيعود إليك غدًا.</div>`)+`<div class="fbs"><b>الحل:</b>${q.s}</div>`};
+   fb.innerHTML=(ok?`<div class="fbh fbok">✔ أحسنت! ${e.box>=3?"أتقنت هذا السؤال وخرج من السجل 🎯":"سيعود إليك بعد "+ERRI[e.box]+(ERRI[e.box]==1?" يوم":" أيام")+" للتثبيت."}</div>`:`<div class="fbh fbno">✘ ليست صحيحة. الإجابة: <span class="lans">${q.ah}</span>. سيعود إليك غدًا.</div>`)+`<div class="fbs"><b>الحل:</b>${q.s}</div>`};
   b.onclick=go;inp.onkeydown=ev=>{if(ev.key=="Enter")go()}})}
 // ---------- سباق الدقيقة ----------
 function racePool(g){const P=[];(g==8?L8:L7).forEach(d=>d.ideas.forEach(x=>x.Q.forEach(q=>{if(q.lv!="g"&&q.q.length<140)P.push({q,t:d.t})})));return P}
